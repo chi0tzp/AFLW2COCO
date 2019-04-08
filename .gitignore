@@ -1,0 +1,9 @@
+.directory
+*~
+.idea/
+__pycache__/
+*/__pycache__/
+*.pyc
+flickr/
+aflw-changelog.txt
+aflw.sqlite
