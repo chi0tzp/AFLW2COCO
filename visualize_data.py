@@ -19,7 +19,7 @@ def main():
     # Load AFLW dataset
     dataset = AFLW(root=args.dataset_root,
                    mode=args.mode,
-                   transform=Augmentor(size=args.dim, mean=(114, 102, 93)))
+                   transform=Augmentor(size=args.dim, mean=(92, 101, 113)))
 
     # Build data loader
     data_loader = data.DataLoader(dataset=dataset, batch_size=args.batch_size, num_workers=1, shuffle=True,
