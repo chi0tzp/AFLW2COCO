@@ -42,8 +42,8 @@ def main():
 
         if args.verbose:
             print("Image: %d" % i)
-            print(80 * "=")
-
+            print("===================================================")
+        
         img = images[i].numpy().transpose(1, 2, 0).astype(np.uint8).copy()
         for j in range(len(bbox_targets[i])):
             # Get object's bounding box and label
@@ -53,7 +53,8 @@ def main():
 
             cv2.rectangle(img, pt1=(pt[0], pt[1]), pt2=(pt[2], pt[3]), color=(255, 0, 255), thickness=2)
             if args.verbose:
-                print("\tbbox = {} (label = {})".format(pt, label))
+                print("\tbbox = ({}, {}, {}, {}) (label = {})".format(int(pt[0]), int(pt[1]), int(pt[2]), int(pt[3]),
+                                                                      label))
 
             cv2.imshow("AFLW: {}".format(i), img)
             cv2.waitKey()

@@ -52,8 +52,8 @@ class AFLW(data.Dataset):
                  target_transform=AFLWAnnotationTransform()):
         sys.path.append(osp.join(root, "PythonAPI"))
         from pycocotools.coco import COCO
-        self.root = osp.join(root, "flickr")
-        self.coco = COCO(osp.join(root, "aflw_annotations_{}.json".format(mode)))
+        self.root = root
+        self.coco = COCO(osp.join(self.root, "aflw_annotations_{}.json".format(mode)))
         self.ids = list(self.coco.imgToAnns.keys())
         self.transform = transform
         self.target_transform = target_transform

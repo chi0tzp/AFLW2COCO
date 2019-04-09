@@ -1,11 +1,11 @@
 import argparse
 import sys
-import os.path
+import os
+import os.path as osp
 import sqlite3
 import json
 import re
 from PIL import Image
-import cv2
 
 # Number of facial landmarks provided by AFLW dataset
 N_LANDMARK = 21
@@ -108,14 +108,10 @@ def main():
         img_cnt += 1
 
         # Get current image path
-        img_path = os.path.join(args.dataset_root, 'flickr', path)
+        img_path = osp.join(args.dataset_root, 'flickr', path)
 
         # Process current image
-        if os.path.isfile(img_path):
-            # Load (color) image and get height, width
-            # image = cv2.imread(img_path)
-            # image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            # img_h, img_w = image.shape
+        if osp.isfile(img_path):
             img_w, img_h = get_img_size(img_path)
 
             keypoints = N_LANDMARK * 3 * [0]
@@ -125,7 +121,7 @@ def main():
             # Register
             aflw_dataset_dict[face_id] = {
                 'face_id': face_id,
-                'img_path': path,
+                'img_path': osp.join('flickr', path),
                 'width': img_w,
                 'height': img_h,
                 'bbox': (rectx, recty, rectw, recth),
@@ -187,8 +183,7 @@ def main():
     images_list = []
     annotations_list = []
     for face_id, face_ann in aflw_dataset_dict.items():
-
-        img_dir_num = int(face_ann['img_path'].split("/")[0])
+        img_dir_num = int(face_ann['img_path'].split("/")[1])
         img_file_num = int(re.findall(r'\d+', face_ann['img_path'].split("/")[-1].split(".")[0])[0])
         image_id = int("%d%05d" % (img_dir_num, img_file_num))
 
