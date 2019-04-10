@@ -121,7 +121,7 @@ def main():
             # Register
             aflw_dataset_dict[face_id] = {
                 'face_id': face_id,
-                'img_path': osp.join('flickr', path),
+                'img_path': osp.join(osp.basename(os.getcwd()), 'flickr', path),
                 'width': img_w,
                 'height': img_h,
                 'bbox': (rectx, recty, rectw, recth),
@@ -183,7 +183,7 @@ def main():
     images_list = []
     annotations_list = []
     for face_id, face_ann in aflw_dataset_dict.items():
-        img_dir_num = int(face_ann['img_path'].split("/")[1])
+        img_dir_num = int(face_ann['img_path'].split("/")[2])
         img_file_num = int(re.findall(r'\d+', face_ann['img_path'].split("/")[-1].split(".")[0])[0])
         image_id = int("%d%05d" % (img_dir_num, img_file_num))
 
