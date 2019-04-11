@@ -28,7 +28,7 @@ def main():
     # Set up a parser for command line arguments
     parser = argparse.ArgumentParser("Compute AFLW dataset's statistics")
     parser.add_argument('-v', '--verbose', action='store_true', help="increase output verbosity")
-    parser.add_argument('--dataset_root', type=str, default='./', help="set dataset's root directory")
+    parser.add_argument('--dataset_root', type=str, default='../', help="set dataset's root directory")
     parser.add_argument('--mode', type=str, choices=('train', ), default='train', help="chose dataset's mode")
     args = parser.parse_args()
 
@@ -38,7 +38,7 @@ def main():
     # Total number of images in dataset
     num_images = len(dataset)
 
-    #
+    # Compute statistics for AFLW dataset
     if args.verbose:
         print("#. Compute statistics for AFLW dataset...")
 
