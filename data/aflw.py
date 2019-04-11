@@ -53,7 +53,7 @@ class AFLW(data.Dataset):
         sys.path.append(osp.join(root, "PythonAPI"))
         from pycocotools.coco import COCO
         self.root = root
-        self.coco = COCO(osp.join(self.root, "aflw_annotations_{}.json".format(mode)))
+        self.coco = COCO(osp.join(self.root, 'aflw', "aflw_annotations_{}.json".format(mode)))
         self.ids = list(self.coco.imgToAnns.keys())
         self.transform = transform
         self.target_transform = target_transform
@@ -84,6 +84,7 @@ class AFLW(data.Dataset):
         ann_ids = self.coco.getAnnIds(imgIds=img_id)
         target = self.coco.loadAnns(ann_ids)
         path = osp.join(self.root, self.coco.loadImgs(img_id)[0]['file_name'])
+        # path = osp.join(self.root, 'aflw', self.coco.loadImgs(img_id)[0]['file_name'])
         assert osp.exists(path), 'Image path does not exist: {}'.format(path)
         img = cv2.imread(path)
         height, width, _ = img.shape

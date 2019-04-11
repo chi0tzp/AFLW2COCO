@@ -400,7 +400,7 @@ class Augmentor(object):
         self.augment = Compose([ConvertFromInts(),
                                 ToAbsoluteCoords(),
                                 PhotometricDistort(),
-                                # Expand(self.mean),
+                                Expand(self.mean),
                                 RandomSampleCrop(),
                                 RandomMirror(),
                                 ToPercentCoords(),
