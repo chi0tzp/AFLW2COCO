@@ -28,12 +28,10 @@ def main():
     # Set up a parser for command line arguments
     parser = argparse.ArgumentParser("Compute AFLW dataset's statistics")
     parser.add_argument('-v', '--verbose', action='store_true', help="increase output verbosity")
-    parser.add_argument('--dataset_root', type=str, default='../', help="set dataset's root directory")
-    parser.add_argument('--mode', type=str, choices=('train', ), default='train', help="chose dataset's mode")
     args = parser.parse_args()
 
     # Build data loader
-    dataset = AFLW(root=args.dataset_root, mode=args.mode, transform=None)
+    dataset = AFLW(root='./', transform=None)
 
     # Total number of images in dataset
     num_images = len(dataset)
@@ -52,10 +50,6 @@ def main():
     per_channel_sum = np.zeros((1, 3))
     for i in range(num_images):
         img, gt, img_h, img_w, _, _ = dataset.pull_item(i)
-        # img   : torch.Tensor
-        # gt    : list of numpy.ndarray of shape (5, 1)
-        # img_h : int
-        # img_w : int
         img_widths.append(img_w)
         img_heights.append(img_h)
         scale = np.array([img_w, img_h, img_w, img_h])
@@ -100,12 +94,11 @@ def main():
         'bbox_labels': bbox_labels,
         'per_channel_mean': per_channel_mean
     }
-    dataset_statistics_file = "aflw_train_statistics.npy"
 
     if args.verbose:
-        print(".# Save dataset's statistics at {}...".format(dataset_statistics_file))
+        print(".# Save dataset's statistics...")
 
-    np.save(dataset_statistics_file, dataset_statistics_dict)
+    np.save("aflw_train_statistics.npy", dataset_statistics_dict)
 
 
 if __name__ == "__main__":

@@ -42,9 +42,8 @@ def main():
     # Set up a parser for command line arguments
     parser = argparse.ArgumentParser("Convert AFLW dataset's annotation into COCO format")
     parser.add_argument("-v", "--verbose", action="store_true", help="increase output verbosity")
-    parser.add_argument("--dataset_root", type=str, default='./', help="set AFLW dataset root path")
     parser.add_argument("--sqlite", type=str, default='aflw.sqlite', help="")
-    parser.add_argument("--json", type=str, default='aflw_annotations_train.json', help="")
+    parser.add_argument("--json", type=str, default='aflw_annotations.json', help="")
     args = parser.parse_args()
 
     if args.verbose:
@@ -108,7 +107,7 @@ def main():
         img_cnt += 1
 
         # Get current image path
-        img_path = osp.join(args.dataset_root, 'flickr', path)
+        img_path = osp.join('flickr', path)
 
         # Process current image
         if osp.isfile(img_path):
@@ -121,7 +120,7 @@ def main():
             # Register
             aflw_dataset_dict[face_id] = {
                 'face_id': face_id,
-                'img_path': osp.join(osp.basename(os.getcwd()), 'flickr', path),
+                'img_path': osp.join('flickr', path),
                 'width': img_w,
                 'height': img_h,
                 'bbox': (rectx, recty, rectw, recth),
@@ -183,7 +182,7 @@ def main():
     images_list = []
     annotations_list = []
     for face_id, face_ann in aflw_dataset_dict.items():
-        img_dir_num = int(face_ann['img_path'].split("/")[2])
+        img_dir_num = int(face_ann['img_path'].split("/")[1])
         img_file_num = int(re.findall(r'\d+', face_ann['img_path'].split("/")[-1].split(".")[0])[0])
         image_id = int("%d%05d" % (img_dir_num, img_file_num))
 

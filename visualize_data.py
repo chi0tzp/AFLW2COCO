@@ -10,15 +10,12 @@ def main():
     # Set up a parser for command line arguments
     parser = argparse.ArgumentParser("Visualize AFLW dataset")
     parser.add_argument('-v', '--verbose', action='store_true', help="increase output verbosity")
-    parser.add_argument('--dataset_root', type=str, default='../', help="set dataset's root directory")
-    parser.add_argument('--mode', type=str, choices=('train', ), default='train', help="chose dataset's mode")
     parser.add_argument('--batch_size', type=int, default=4, help="set batch size")
     parser.add_argument('--dim', type=int, default=300, help="input image dimension")
     args = parser.parse_args()
 
     # Load AFLW dataset
-    dataset = AFLW(root=args.dataset_root,
-                   mode=args.mode,
+    dataset = AFLW(root='./',
                    transform=Augmentor(size=args.dim, mean=(92, 101, 113)))
 
     # Build data loader
