@@ -192,7 +192,8 @@ def main():
                             'width': face_ann['width'],
                             'date_captured': '',
                             'flickr_url': '',
-                            'license': 1})
+                            'license': 1,
+                            'dataset': 'aflw'})
 
         annotations_list.append({'id': face_id,
                                  'image_id': image_id,
