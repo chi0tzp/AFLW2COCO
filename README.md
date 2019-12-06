@@ -2,19 +2,9 @@
 
 ![AFLW](aflw_cover.jpg)
 
+Annotated Facial Landmarks in the Wild ([AFLW](https://www.tugraz.at/institute/icg/research/team-bischof/lrs/downloads/aflw/#)) [1] provides a large-scale collection of annotated face images gathered from the web, exhibiting a large variety in appearance (e.g., pose, expression, ethnicity, age, gender) as well as general imaging and environmental conditions. In total about **25k faces** are annotated with up to **21 landmarks** per image.
 
 
-In this repo, we provide annotations in COCO format for the AFLW dataset:
-
-- 
-
-
-
-
-
-Annotated Facial Landmarks in the Wild (AFLW) [1] provides a large-scale collection of annotated face images gathered from the web, exhibiting a large variety in appearance (e.g., pose, expression, ethnicity, age, gender) as well as general imaging and environmental conditions. In total about **25k faces** are annotated with up to **21 landmarks** per image.
-
-​           
 
 ##### Step 1: Clone repo
 
