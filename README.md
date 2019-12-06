@@ -1,20 +1,17 @@
 # AFLW2COCO: convert AFLW annotation into COCO format
 
-![AFLW](aflw_cover.jpg)
+
+
+<p align="center">
+  <img width="600" height="324" src="aflw_cover.jpg">
+</p>
+
 
 Annotated Facial Landmarks in the Wild ([AFLW](https://www.tugraz.at/institute/icg/research/team-bischof/lrs/downloads/aflw/#)) [1] provides a large-scale collection of annotated face images gathered from the web, exhibiting a large variety in appearance (e.g., pose, expression, ethnicity, age, gender) as well as general imaging and environmental conditions. In total about **25k faces** are annotated with up to **21 landmarks** per image.
 
+In this repo, we provide ...
 
-
-##### Step 1: Clone repo
-
-~~~
-git clone https://github.com/chi0tzp/AFLW2COCO.git
-~~~
-
-
-
-##### Step 2: Download dataset
+**Step 1: Download dataset**
 
 Download dataset following the instruction described [here](https://www.tugraz.at/institute/icg/research/team-bischof/lrs/downloads/aflw/). More specifically, download the following zip files:
 
@@ -31,7 +28,7 @@ AFLWDataset/
 
 
 
-##### Step 3: Convert original annotations into COCO format 
+**Step 2: Convert original annotations into COCO format** 
 
 ~~~
 python convert2coco.py --dataset_root=<dataset_root>
@@ -43,7 +40,7 @@ where `<dataset_root>` is the directory where dataset has been extracted (e.g., 
 
 
 
-##### Optional step: dataset visualization 
+**Dataset visualization** 
 
 For this purpose, [COCOAPI](https://github.com/cocodataset/cocoapi) needs to be installed first.
 
