@@ -79,9 +79,25 @@ optional arguments:
   --dim DIM             input image dimension
 ~~~
 
-**TODO**
-- [x] Dataset visualization
-- [ ] Compute dataset statistics
+
+
+**Images and bounding box statistics**
+
+You can compute statistics about images widths and heights, as well as face bounding boxes widths and heights, using the following script:
+
+~~~
+python3 compute_dataset_statistics.py -h
+usage: Compute AFLW dataset's statistics [-h] [-v] --dataset_root DATASET_ROOT [--json JSON]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -v, --verbose         increase output verbosity
+  --dataset_root DATASET_ROOT
+                        AFLW root directory
+  --json JSON           COCO json annotation file
+~~~
+
+
 
 [1] Koestinger, Martin, et al. "Annotated facial landmarks in the wild: A large-scale, real-world database for 
 facial landmark localization." *2011 IEEE international conference on computer vision workshops (ICCV  workshops)*. IEEE, 2011.
