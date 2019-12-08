@@ -30,35 +30,36 @@ def progress_updt(msg, total, progress):
     if progress >= 1.:
         progress, status = 1, "\r\n"
     block = int(round(bar_length * progress))
-    text = "\r{}[{}] {:.0f}% {}".format(msg,
-                                        "#" * block + "-" * (bar_length - block),
-                                        round(progress * 100, 0),
-                                        status)
+    text = "\r{}[{}] {:.0f}% {}".format(msg, "#" * block + "-" * (bar_length - block), round(progress * 100, 0), status)
     sys.stdout.write(text)
     sys.stdout.flush()
 
 
 def main():
     # Set up a parser for command line arguments
-    parser = argparse.ArgumentParser("Convert AFLW dataset's annotation into COCO format")
-    parser.add_argument("-v", "--verbose", action="store_true", help="increase output verbosity")
-    parser.add_argument("--sqlite", type=str, default='aflw.sqlite', help="")
-    parser.add_argument("--json", type=str, default='aflw_annotations.json', help="")
+    parser = argparse.ArgumentParser("Convert AFLW dataset's annotation into COCO json format")
+    parser.add_argument('-v', '--verbose', action="store_true", help="increase output verbosity")
+    parser.add_argument('--dataset_root', type=str, help='AFLW root directory')
+    parser.add_argument('--json', type=str, default='aflw_annotations.json', help="output COCO json annotation file")
     args = parser.parse_args()
+
+    # Get absolute path of dataset root dir
+    args.dataset_root = osp.abspath(args.dataset_root)
 
     if args.verbose:
         print("#. Transform AFLW annotations into COCO json format...")
 
-    # Open the AFLW sqlite database
+    # Open the original AFLW annotation (sqlite database)
     if args.verbose:
         print("  \\__Open the AFLW SQLight database...", end="")
         sys.stdout.flush()
-    conn = sqlite3.connect(args.sqlite)
+
+    conn = sqlite3.connect(osp.join(args.dataset_root, 'aflw.sqlite'))
     cursor = conn.cursor()
     if args.verbose:
         print("Done!")
 
-    # TODO: add comment
+    # Build sqlite queries
     select_str = "faces.face_id, " \
                  "imgs.filepath, " \
                  "rect.x, rect.y, " \
@@ -107,7 +108,7 @@ def main():
         img_cnt += 1
 
         # Get current image path
-        img_path = osp.join('flickr', path)
+        img_path = osp.join(args.dataset_root, 'flickr', path)
 
         # Process current image
         if osp.isfile(img_path):
@@ -223,14 +224,8 @@ def main():
     dataset_licenses = {
         'licenses': [
             {'id': 0,
-             'url': 'license_url_0',
-             'name': 'license_url_0'},
-            {'id': 1,
-             'url': 'license_url_1',
-             'name': 'license_url_1'},
-            {'id': 2,
-             'url': 'license_url_2',
-             'name': 'license_url_2'}
+             'url': 'https://www.tugraz.at/institute/icg/research/team-bischof/lrs/downloads/aflw/',
+             'name': 'aflw_license'}
         ]
     }
     dataset_dict.update(dataset_licenses)
