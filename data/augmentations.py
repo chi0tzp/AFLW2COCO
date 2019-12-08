@@ -394,18 +394,20 @@ class Compose(object):
 
 
 class Augmentor(object):
-    def __init__(self, size=300, mean=(114, 102, 93)):
+    def __init__(self, size=300, mean=(92, 101, 113)):
         self.mean = mean
         self.size = size
-        self.augment = Compose([ConvertFromInts(),
-                                ToAbsoluteCoords(),
-                                PhotometricDistort(),
-                                Expand(self.mean),
-                                RandomSampleCrop(),
-                                RandomMirror(),
-                                ToPercentCoords(),
-                                Resize(self.size),
-                                SubtractMeans(self.mean)])
+        self.augment = Compose([
+            ConvertFromInts(),
+            ToAbsoluteCoords(),
+            PhotometricDistort(),
+            # Expand(self.mean),
+            RandomSampleCrop(),
+            RandomMirror(),
+            ToPercentCoords(),
+            Resize(self.size),
+            SubtractMeans(self.mean)
+        ])
 
     def __call__(self, img, boxes, labels):
         return self.augment(img, boxes, labels)

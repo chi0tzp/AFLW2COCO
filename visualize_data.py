@@ -8,15 +8,21 @@ import cv2
 
 def main():
     # Set up a parser for command line arguments
-    parser = argparse.ArgumentParser("Visualize AFLW dataset")
+    parser = argparse.ArgumentParser("Visualize AFLW dataset (COCO-style annotations)")
     parser.add_argument('-v', '--verbose', action='store_true', help="increase output verbosity")
+    parser.add_argument('--dataset_root', type=str, required=True, help='AFLW root directory')
+    parser.add_argument('--json', type=str, default='aflw_annotations.json', help="COCO json annotation file")
     parser.add_argument('--batch_size', type=int, default=4, help="set batch size")
     parser.add_argument('--dim', type=int, default=300, help="input image dimension")
+    parser.add_argument('-a', '--augment', action='store_true', help="apply augmentations")
     args = parser.parse_args()
 
     # Load AFLW dataset
-    dataset = AFLW(root='./',
-                   transform=Augmentor(size=args.dim, mean=(92, 101, 113)))
+    if args.augment:
+        transform = Augmentor(size=args.dim, mean=(92, 101, 113))
+    else:
+        transform = BaseTransform(size=args.dim, mean=(0, 0, 0))
+    dataset = AFLW(root=args.dataset_root, transform=transform)
 
     # Build data loader
     data_loader = data.DataLoader(dataset=dataset, batch_size=args.batch_size, num_workers=1, shuffle=True,
