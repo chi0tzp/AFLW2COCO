@@ -47,12 +47,14 @@ class AFLW(data.Dataset):
     """
     def __init__(self,
                  root,
+                 json='aflw_annotations.json',
                  transform=None,
                  target_transform=AFLWAnnotationTransform()):
         sys.path.append(osp.join(root, "PythonAPI"))
         from pycocotools.coco import COCO
         self.root = root
-        self.coco = COCO(osp.join(self.root, "aflw_annotations.json"))
+        self.json = json
+        self.coco = COCO(osp.join(self.root, self.json))
         self.ids = list(self.coco.imgToAnns.keys())
         self.transform = transform
         self.target_transform = target_transform

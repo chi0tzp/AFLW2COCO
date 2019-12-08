@@ -22,7 +22,7 @@ def main():
         transform = Augmentor(size=args.dim, mean=(92, 101, 113))
     else:
         transform = BaseTransform(size=args.dim, mean=(0, 0, 0))
-    dataset = AFLW(root=args.dataset_root, transform=transform)
+    dataset = AFLW(root=args.dataset_root, json=args.json, transform=transform)
 
     # Build data loader
     data_loader = data.DataLoader(dataset=dataset, batch_size=args.batch_size, num_workers=1, shuffle=True,
