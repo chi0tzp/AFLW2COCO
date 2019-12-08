@@ -39,7 +39,7 @@ def main():
     # Set up a parser for command line arguments
     parser = argparse.ArgumentParser("Convert AFLW dataset's annotation into COCO json format")
     parser.add_argument('-v', '--verbose', action="store_true", help="increase output verbosity")
-    parser.add_argument('--dataset_root', type=str, help='AFLW root directory')
+    parser.add_argument('--dataset_root', type=str, required=True, help='AFLW root directory')
     parser.add_argument('--json', type=str, default='aflw_annotations.json', help="output COCO json annotation file")
     args = parser.parse_args()
 
@@ -81,9 +81,9 @@ def main():
                 "faces.face_id = metadata.face_id"
     query_res = exec_sqlite_query(cursor, select_str, from_str, where_str)
 
-    # Count the total number of images in AFLW dataset
+    # Count total number of images in AFLW dataset
     if args.verbose:
-        print("  \\__Count the total number of images in AFLW database: ", end="")
+        print("  \\__Count total number of images in AFLW database: ", end="")
         sys.stdout.flush()
     total_num_images = 0
     for _ in query_res:
