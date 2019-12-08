@@ -1,5 +1,4 @@
 import sys
-import json
 import argparse
 from data import *
 
@@ -10,28 +9,21 @@ def progress_updt(msg, total, progress):
     if progress >= 1.:
         progress, status = 1, "\r\n"
     block = int(round(bar_length * progress))
-    text = "\r{}[{}] {:.0f}% {}".format(msg,
-                                        "#" * block + "-" * (bar_length - block),
-                                        round(progress * 100, 0),
-                                        status)
+    text = "\r{}[{}] {:.0f}% {}".format(msg, "#" * block + "-" * (bar_length - block), round(progress * 100, 0), status)
     sys.stdout.write(text)
     sys.stdout.flush()
-
-
-def write_dict(filename, d):
-    f = open(filename, "w")
-    f.write(json.dumps(d))
-    f.close()
 
 
 def main():
     # Set up a parser for command line arguments
     parser = argparse.ArgumentParser("Compute AFLW dataset's statistics")
     parser.add_argument('-v', '--verbose', action='store_true', help="increase output verbosity")
+    parser.add_argument('--dataset_root', type=str, required=True, help='AFLW root directory')
+    parser.add_argument('--json', type=str, default='aflw_annotations.json', help="COCO json annotation file")
     args = parser.parse_args()
 
     # Build data loader
-    dataset = AFLW(root='./', transform=None)
+    dataset = AFLW(root=args.dataset_root, json=args.json, transform=None)
 
     # Total number of images in dataset
     num_images = len(dataset)
@@ -98,7 +90,7 @@ def main():
     if args.verbose:
         print(".# Save dataset's statistics...")
 
-    np.save("aflw_train_statistics.npy", dataset_statistics_dict)
+    np.save("aflw_statistics.npy", dataset_statistics_dict)
 
 
 if __name__ == "__main__":
